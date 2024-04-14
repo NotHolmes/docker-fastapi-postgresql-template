@@ -1,0 +1,26 @@
+version: '3'
+
+services:
+  web:
+    build: .
+    depends_on:
+      - db
+    volumes:
+      - ./:/app:ro
+    environment:
+      - DATABASE_URL=postgresql://postgres:tht1234@db/fastapi
+    ports:
+      - "8000:8000"
+
+  db:
+      image: postgres:15-alpine
+      container_name: db
+      volumes:
+        - postgres_data:/var/lib/postgresql/data/
+      environment:
+        - POSTGRES_USER=postgres
+        - POSTGRES_PASSWORD=tht1234
+        - POSTGRES_DB=fastapi
+
+volumes:
+      postgres_data: 
